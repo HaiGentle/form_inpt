@@ -14,8 +14,10 @@ const Input = styled.input`
     padding: 12px 50px 12px 12px;
     margin-top: 7px;
     border-radius: 3px;
-    border: solid 1px;
-    /* border: ${props => props.checked? "#00ff00" : "red"} 1px solid; */
+    border: ${props => props.checked === null? "grey" :
+            props.checked === false? "red" :
+            props.checked === true? "#00ff00" : null
+    } 1px solid;
     &:focus{
         outline: none;
         border: rgba(61, 195, 248, 0.507) 3px solid;
@@ -57,7 +59,7 @@ const InputWrapper = (props) => {
     return (
         <Wrapper>
             <Label htmlFor={title}>{title}</Label>
-            <Input type={type} value={valueInput} onChange={handleOnChange}/>
+            <Input checked={checked} type={type} value={valueInput} onChange={handleOnChange}/>
             {checked===false? <IconX>X</IconX> : null}
             {checked===true? <IconV>V</IconV> : null}
             {   
