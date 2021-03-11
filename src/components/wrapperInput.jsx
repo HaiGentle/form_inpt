@@ -21,6 +21,7 @@ const Input = styled.input`
             props.checked === true? "#00ff00" : null
     } 1px solid;
     &:focus{
+        transition: 0.5s;
         border: rgba(61, 195, 248, 0.507) 1px solid;
         box-shadow: 0 0 10px rgba(61, 195, 248, 0.507);
         border-radius: 3px;
