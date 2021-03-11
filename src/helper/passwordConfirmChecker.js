@@ -3,7 +3,7 @@ export const passwordConfirmChecker = (password, passwordConfirm) => {
         return ["Please provide the required field"]
     }
     if(password === passwordConfirm) {
-        return [true]
+        return []
     }
     else {
         return ["The provided passwords do not match"]

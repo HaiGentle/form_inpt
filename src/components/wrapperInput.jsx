@@ -13,14 +13,15 @@ const Input = styled.input`
     width: 100%;
     padding: 12px 50px 12px 12px;
     margin-top: 7px;
+    
+    outline: none;
     border-radius: 3px;
     border: ${props => props.checked === null? "grey" :
             props.checked === false? "red" :
             props.checked === true? "#00ff00" : null
     } 1px solid;
     &:focus{
-        outline: none;
-        border: rgba(61, 195, 248, 0.507) 3px solid;
+        border: rgba(61, 195, 248, 0.507) 1px solid;
         box-shadow: 0 0 10px rgba(61, 195, 248, 0.507);
         border-radius: 3px;
     }
@@ -49,19 +50,24 @@ const Mess = styled.p`
 `
 
 const InputWrapper = (props) => {
-    const {title, type, valueInput, mess, handleInputChange, checked} = props;
+    const {title, type, name, valueInput, mess, handleInputChange, checked} = props;
     
     const handleOnChange = (e) => {
-        const value = e.target.value;
-        handleInputChange(value);
+        handleInputChange(e);
     }
 
     return (
         <Wrapper>
             <Label htmlFor={title}>{title}</Label>
-            <Input checked={checked} type={type} value={valueInput} onChange={handleOnChange}/>
-            {checked===false? <IconX>X</IconX> : null}
-            {checked===true? <IconV>V</IconV> : null}
+            <Input 
+                checked={checked} 
+                type={type} 
+                name={name} 
+                value={valueInput} 
+                onChange={handleOnChange}
+            />
+            {checked===false && <IconX>X</IconX>}
+            {checked===true && <IconV>V</IconV>}
             {   
                 checked===false? mess.map((m,i) => (
                     <Mess key={i}>{m}</Mess>

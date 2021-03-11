@@ -2,22 +2,15 @@ export const passwrodChecker = (password) => {
     if(password === "") {
         return ["Please provide the required field"]
     }
-    let mess = [
-        "Please include at least one capital letter",
-        "Please include at least one number",
-        "Password must be at least 6 characters long"
-    ];
-    if(password.length >= 6) {
-        mess[2] = true;
+    let mess = [];
+    if(password.length < 6) {
+        mess.push("Password must be at least 6 characters long");
     }
-    for(let i=0; i < password.length; i++) {
-        // console.log({i});
-        if(!isNaN(password[i])) { //check la so
-            mess[1] = true;
-        }
-        if(password[i] === password[i].toUpperCase()) {
-            mess[0] = true
-        }
+    if(!/[A-Z]/.test(password)) { //check la so
+        mess.push("Please include at least one capital letter");
+    }
+    if(!/[0-9]/.test(password)) {
+        mess.push("Please include at least one number");
     }
     return mess;
 }

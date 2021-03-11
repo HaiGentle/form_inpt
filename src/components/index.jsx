@@ -29,30 +29,45 @@ const RegisterForm = () => {
         lastName: ""
     })
     const [mess, setMess] = useState({
-        password: [null],
-        confirmPassword: [null],
-        firstName: [null],
-        lastName: [null]
+        password: null,
+        confirmPassword: null,
+        firstName: null,
+        lastName: null
     })
 
-    const handlePasswordInptChange = (value) => {
-        setFormValue({...formValue, password: value});
-        setMess({...mess, password: passwrodChecker(value)});
-    }
-    const handlePasswordConfirmInptChange = (value) => {
-        setFormValue({...formValue, confirmPassword: value});
-        setMess({
-            ...mess,
-            confirmPassword: passwordConfirmChecker(formValue.password, value)
-        });
-    }
-    const handleFirstNameInptChange = (value) => {
-        setFormValue({...formValue, firstName: value});
-        setMess({...mess, firstName: firstNameChecker(value)});
-    }
-    const handleLastNameInptChange = (value) => {
-        setFormValue({...formValue, lastName: value});
-        setMess({...mess, lastName: lastNameChecker(value)});
+    const handleInptChange = (e) => {
+        const {name, value} = e.target;
+        setFormValue(pre => (
+            {...pre,[name] : value }
+        ))
+        let messTemp ;
+        switch(name) {
+            case "password":
+                messTemp = passwrodChecker(value);
+                setMess(pre => (
+                    {...pre, [name]: messTemp}
+                ))
+                break;
+            case "confirmPassword":
+                messTemp = passwordConfirmChecker(formValue.password, value);
+                setMess(pre => (
+                    {...pre, [name]: messTemp}
+                ))
+                break;
+            case "firstName":
+                messTemp = firstNameChecker(value);
+                setMess(pre => (
+                    {...pre, [name]: messTemp}
+                ))
+                break;
+            case "lastName":
+                messTemp = lastNameChecker(value);
+                setMess(pre => (
+                    {...pre, [name]: messTemp}
+                ))
+                break;
+            default: break;
+        }
     }
     const handleButtonSubmit = (e) => {
         e.preventDefault();
@@ -62,51 +77,53 @@ const RegisterForm = () => {
 
     //hàm kiểm tra có mess không để show ra mess
     function checker(value) {
-        let result = true;
-        value.forEach(e => {
-            if(e == null) {
-                return result = null;
-            }
-            if(e !== true) {
-                result = false;
-            }
-        })
-        // result = true;
+        let result = null;
+        if(value == null) return result;
+        if(value.length > 0) {
+            result = false
+        }
+        if(value.length === 0) {
+            result = true;
+        }
         return result;
     }
 
     return (
         <Register onSubmit={handleButtonSubmit}>
             <WrapperInput
-                type="Password"
+                type="password"
                 title="Password*"
+                name="password"
                 valueInput={formValue.password}
                 mess={mess.password}
-                handleInputChange={handlePasswordInptChange}
+                handleInputChange={handleInptChange}
                 checked={checker(mess.password)}
             />
             <WrapperInput
                 title="Confirm Password*"
-                type="Password"
+                type="password"
+                name="confirmPassword"
                 valueInput={formValue.confirmPassword}
                 mess={mess.confirmPassword}
-                handleInputChange={handlePasswordConfirmInptChange}
+                handleInputChange={handleInptChange}
                 checked={checker(mess.confirmPassword)}
             />
             <WrapperInput
                 title="First name"
                 type="text"
+                name="firstName"
                 valueInput={formValue.firstName}
                 mess={mess.firstName}
-                handleInputChange={handleFirstNameInptChange}
+                handleInputChange={handleInptChange}
                 checked={checker(mess.firstName)}
             />
             <WrapperInput
                 title="Last name"
                 type="text"
+                name="lastName"
                 valueInput={formValue.lastName}
                 mess={mess.lastName}
-                handleInputChange={handleLastNameInptChange}
+                handleInputChange={handleInptChange}
                 checked={checker(mess.lastName)}
             />
             <ButtonSubmit type="submit">Register</ButtonSubmit>
